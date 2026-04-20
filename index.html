@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paltas Ya! — Frescura que no espera</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,400;1,9..144,700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --verde:   #2D5A1B;
+      --verde2:  #4A8C2A;
+      --amarillo:#F2C94C;
+      --crema:   #F5F0E8;
+      --negro:   #1A1A0F;
+      --naranja: #E07B39;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--crema);
+      color: var(--negro);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ── CURSOR ── */
+    .cursor {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: var(--amarillo);
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.12s ease, width 0.2s, height 0.2s, background 0.2s;
+      mix-blend-mode: multiply;
+    }
+    .cursor.big { width: 48px; height: 48px; background: var(--verde); }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 3rem;
+      background: rgba(245,240,232,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(45,90,27,0.1);
+    }
+
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      color: var(--verde);
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--naranja); }
+
+    .nav-links {
+      display: flex; gap: 2rem; list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--negro);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+    }
+    .nav-links a:hover { opacity: 1; }
+
+    .nav-cta {
+      background: var(--verde);
+      color: var(--crema) !important;
+      opacity: 1 !important;
+      padding: 0.5rem 1.2rem;
+      border-radius: 100px;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--verde2) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: var(--verde);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 8rem 3rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 700px; height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(74,140,42,0.5) 0%, transparent 70%);
+      top: -200px; right: -200px;
+      pointer-events: none;
+    }
+
+    .hero-text { position: relative; z-index: 2; }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--amarillo);
+      color: var(--negro);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.9rem;
+      border-radius: 100px;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5rem, 9vw, 8.5rem);
+      line-height: 0.92;
+      color: var(--crema);
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+    .hero-title .accent { color: var(--amarillo); display: block; }
+
+    .hero-sub {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      color: rgba(245,240,232,0.7);
+      margin: 1.5rem 0 2.5rem;
+      max-width: 420px;
+      line-height: 1.5;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    .hero-actions {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+
+    .btn-primary {
+      background: var(--amarillo);
+      color: var(--negro);
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 0.9rem 2rem;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(242,201,76,0.4); }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--crema);
+      font-weight: 500;
+      font-size: 0.95rem;
+      padding: 0.9rem 2rem;
+      border-radius: 100px;
+      text-decoration: none;
+      border: 1.5px solid rgba(245,240,232,0.3);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--crema); background: rgba(245,240,232,0.08); }
+
+    /* palta hero */
+    .hero-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+      animation: fadeUp 0.6s 0.15s ease both;
+    }
+
+    .palta-big {
+      width: clamp(240px, 30vw, 380px);
+      animation: floatBig 5s ease-in-out infinite;
+      filter: drop-shadow(0 40px 60px rgba(0,0,0,0.35));
+    }
+
+    @keyframes floatBig {
+      0%,100% { transform: translateY(0) rotate(-3deg); }
+      50%      { transform: translateY(-18px) rotate(3deg); }
+    }
+
+    .hero-stats {
+      position: absolute;
+      bottom: 3rem; left: 3rem; right: 3rem;
+      display: flex; gap: 2rem;
+      animation: fadeUp 0.6s 0.4s ease both;
+    }
+
+    .stat {
+      display: flex; flex-direction: column;
+    }
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      color: var(--amarillo);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      color: rgba(245,240,232,0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap {
+      background: var(--amarillo);
+      overflow: hidden;
+      padding: 0.8rem 0;
+      border-top: 2px solid var(--negro);
+      border-bottom: 2px solid var(--negro);
+    }
+
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marquee 18s linear infinite;
+    }
+
+    .marquee-item {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.1em;
+      color: var(--negro);
+      padding: 0 2rem;
+      white-space: nowrap;
+    }
+
+    .marquee-item .dot { color: var(--verde); margin-left: 2rem; }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── PRODUCTOS ── */
+    .productos {
+      padding: 6rem 3rem;
+      background: var(--crema);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .section-kicker {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--verde2);
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1;
+      color: var(--negro);
+    }
+
+    .productos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .producto-card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+    .producto-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(45,90,27,0.12);
+    }
+
+    .producto-img {
+      background: var(--verde);
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .producto-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 70% 30%, rgba(74,140,42,0.6), transparent);
+    }
+
+    .producto-img.amarillo-bg { background: var(--amarillo); }
+    .producto-img.naranja-bg  { background: #FFF0E6; }
+
+    .producto-badge {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      background: var(--amarillo);
+      color: var(--negro);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+      border-radius: 100px;
+      z-index: 2;
+    }
+
+    .producto-body { padding: 1.5rem; }
+
+    .producto-nombre {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.3rem;
+    }
+
+    .producto-desc {
+      font-size: 0.85rem;
+      color: #777;
+      line-height: 1.5;
+      margin-bottom: 1.2rem;
+    }
+
+    .producto-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .producto-precio {
+      font-family: 'Fraunces', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--verde);
+    }
+
+    .btn-agregar {
+      background: var(--verde);
+      color: var(--crema);
+      border: none;
+      border-radius: 100px;
+      padding: 0.5rem 1.1rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-agregar:hover { background: var(--verde2); transform: scale(1.05); }
+
+    /* ── CÓMO FUNCIONA ── */
+    .como {
+      background: var(--negro);
+      padding: 6rem 3rem;
+      color: var(--crema);
+    }
+
+    .como .section-kicker { color: var(--amarillo); }
+    .como .section-title  { color: var(--crema); }
+
+    .pasos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+      position: relative;
+    }
+
+    .paso {
+      position: relative;
+      padding-left: 1.5rem;
+      border-left: 2px solid rgba(242,201,76,0.2);
+      transition: border-color 0.3s;
+    }
+    .paso:hover { border-color: var(--amarillo); }
+
+    .paso-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 4rem;
+      color: rgba(242,201,76,0.15);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .paso-titulo {
+      font-family: 'Fraunces', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--amarillo);
+    }
+
+    .paso-desc {
+      font-size: 0.85rem;
+      color: rgba(245,240,232,0.55);
+      line-height: 1.6;
+    }
+
+    /* ── TESTIMONIOS ── */
+    .testimonios {
+      padding: 6rem 3rem;
+      background: var(--crema);
+    }
+
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .testi-card {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      border: 1px solid rgba(0,0,0,0.05);
+      position: relative;
+    }
+
+    .testi-quote {
+      font-size: 3rem;
+      line-height: 0.8;
+      color: var(--amarillo);
+      font-family: 'Fraunces', serif;
+      margin-bottom: 1rem;
+    }
+
+    .testi-text {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #444;
+      margin-bottom: 1.2rem;
+    }
+
+    .testi-author {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--verde);
+    }
+
+    .testi-stars { color: var(--amarillo); margin-bottom: 0.75rem; font-size: 0.9rem; }
+
+    .testi-card:nth-child(2) { background: var(--verde); }
+    .testi-card:nth-child(2) .testi-text { color: rgba(245,240,232,0.8); }
+    .testi-card:nth-child(2) .testi-author { color: var(--amarillo); }
+    .testi-card:nth-child(2) .testi-quote { color: var(--amarillo); opacity: 0.5; }
+
+    /* ── CTA FINAL ── */
+    .cta-final {
+      background: var(--amarillo);
+      padding: 6rem 3rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-final::before {
+      content: 'PALTAS YA!';
+      position: absolute;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20vw;
+      color: rgba(45,90,27,0.06);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    .cta-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 7vw, 6rem);
+      color: var(--negro);
+      line-height: 1;
+      position: relative; z-index: 2;
+    }
+
+    .cta-sub {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-size: 1.2rem;
+      color: rgba(26,26,15,0.6);
+      margin: 1rem 0 2.5rem;
+      position: relative; z-index: 2;
+    }
+
+    .cta-btn {
+      background: var(--verde);
+      color: var(--crema);
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 1rem 2.5rem;
+      border-radius: 100px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      position: relative; z-index: 2;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .cta-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(45,90,27,0.3); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--negro);
+      color: rgba(245,240,232,0.5);
+      padding: 3rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2rem;
+      font-size: 0.85rem;
+    }
+
+    .footer-brand .nav-logo { font-size: 2.2rem; display: block; margin-bottom: 0.5rem; }
+    .footer-brand p { font-family: 'Fraunces', serif; font-style: italic; opacity: 0.5; }
+
+    .footer-col h4 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      color: var(--amarillo);
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 0.4rem; }
+    .footer-col a { color: rgba(245,240,232,0.4); text-decoration: none; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--crema); }
+
+    .footer-bottom {
+      background: var(--negro);
+      border-top: 1px solid rgba(245,240,232,0.08);
+      padding: 1.2rem 3rem;
+      font-size: 0.75rem;
+      color: rgba(245,240,232,0.25);
+      display: flex;
+      justify-content: space-between;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── WHATSAPP FLOAT ── */
+    .wa-float {
+      position: fixed;
+      bottom: 2rem; right: 2rem;
+      background: #25D366;
+      color: white;
+      width: 58px; height: 58px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem;
+      z-index: 200;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+    .wa-float:hover { transform: scale(1.1); }
+
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4); }
+      50%      { box-shadow: 0 4px 40px rgba(37,211,102,0.7); }
+    }
+
+    /* ── B2B SECTION ── */
+    .b2b {
+      background: var(--negro);
+      padding: 6rem 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .b2b::before {
+      content: 'B2B';
+      position: absolute;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22vw;
+      color: rgba(242,201,76,0.04);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .b2b .section-kicker { color: var(--naranja); }
+    .b2b .section-title  { color: var(--crema); }
+
+    .b2b-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-top: 3rem;
+      align-items: start;
+    }
+
+    .b2b-propuestas {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .b2b-item {
+      display: flex;
+      gap: 1.2rem;
+      align-items: flex-start;
+      padding: 1.5rem;
+      border-radius: 16px;
+      border: 1px solid rgba(245,240,232,0.07);
+      background: rgba(255,255,255,0.03);
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .b2b-item:hover {
+      border-color: rgba(242,201,76,0.3);
+      background: rgba(242,201,76,0.04);
+    }
+
+    .b2b-icon {
+      font-size: 2rem;
+      flex-shrink: 0;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .b2b-item-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--amarillo);
+      margin-bottom: 0.3rem;
+    }
+
+    .b2b-item-desc {
+      font-size: 0.85rem;
+      color: rgba(245,240,232,0.5);
+      line-height: 1.6;
+    }
+
+    /* Formulario B2B */
+    .b2b-form-wrap {
+      background: var(--crema);
+      border-radius: 24px;
+      padding: 2.5rem;
+      position: sticky;
+      top: 6rem;
+    }
+
+    .b2b-form-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      color: var(--verde);
+      letter-spacing: 0.03em;
+      margin-bottom: 0.4rem;
+    }
+
+    .b2b-form-sub {
+      font-size: 0.85rem;
+      color: #888;
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--negro);
+      margin-bottom: 0.4rem;
+      opacity: 0.6;
+    }
+
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      border: 1.5px solid rgba(0,0,0,0.1);
+      background: white;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      color: var(--negro);
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--verde);
+    }
+
+    .form-textarea { resize: vertical; min-height: 80px; }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .btn-form {
+      width: 100%;
+      background: var(--verde);
+      color: var(--crema);
+      border: none;
+      border-radius: 100px;
+      padding: 0.9rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: none;
+      transition: background 0.2s, transform 0.15s;
+      margin-top: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .btn-form:hover { background: var(--verde2); transform: translateY(-1px); }
+
+    .b2b-clientes {
+      margin-top: 1rem;
+      font-size: 0.75rem;
+      color: #aaa;
+      text-align: center;
+    }
+
+    /* Volúmenes tabla */
+    .volumenes {
+      background: var(--crema);
+      padding: 5rem 3rem;
+    }
+
+    .vol-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2rem;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .vol-table th {
+      background: var(--verde);
+      color: var(--crema);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      padding: 1rem 1.5rem;
+      text-align: left;
+    }
+
+    .vol-table td {
+      padding: 1rem 1.5rem;
+      font-size: 0.9rem;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      color: #444;
+    }
+
+    .vol-table tr:last-child td { border-bottom: none; }
+    .vol-table tr:nth-child(even) td { background: rgba(45,90,27,0.03); }
+    .vol-table tr:hover td { background: rgba(242,201,76,0.08); }
+
+    .vol-badge {
+      background: var(--amarillo);
+      color: var(--negro);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.5rem;
+      border-radius: 100px;
+    }
+
+    .vol-price {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--verde);
+    }
+
+    @media (max-width: 768px) {
+      .b2b-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .b2b-form-wrap { position: static; }
+      .vol-table th, .vol-table td { padding: 0.75rem 1rem; font-size: 0.8rem; }
+      .volumenes { padding: 3rem 1.5rem; }
+      .b2b { padding: 4rem 1.5rem; }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 8rem; text-align: center; }
+      .hero-visual { display: none; }
+      .hero-actions { justify-content: center; }
+      .hero-stats { left: 1.5rem; right: 1.5rem; flex-wrap: wrap; gap: 1.5rem; }
+      .productos, .como, .testimonios, .cta-final { padding: 4rem 1.5rem; }
+      footer { grid-template-columns: 1fr; padding: 2rem 1.5rem; }
+      .footer-bottom { padding: 1rem 1.5rem; flex-direction: column; gap: 0.5rem; }
+      body { cursor: auto; }
+      .cursor { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">PALTAS<span>YA!</span></a>
+    <ul class="nav-links">
+      <li><a href="#productos">Productos</a></li>
+      <li><a href="#como">Cómo funciona</a></li>
+      <li><a href="#mayoristas">Mayoristas</a></li>
+      <li><a href="#testimonios">Reviews</a></li>
+      <li><a href="#contacto" class="nav-cta">Pedir ahora</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-text">
+      <div class="hero-badge">🥑 Cosecha fresca · Entrega hoy</div>
+      <h1 class="hero-title">
+        PALTAS
+        <span class="accent">YA!</span>
+      </h1>
+      <p class="hero-sub">Paltas Hass seleccionadas a mano. Listas para hoy, listas para mañana. Sin esperas, sin sorpresas.</p>
+      <div class="hero-actions">
+        <a href="#productos" class="btn-primary">Ver paltas 🥑</a>
+        <a href="https://wa.me/56900000000" class="btn-secondary">WhatsApp →</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <svg class="palta-big" viewBox="0 0 300 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- cuerpo -->
+        <ellipse cx="150" cy="220" rx="110" ry="150" fill="#2D5A1B"/>
+        <!-- highlight -->
+        <ellipse cx="110" cy="160" rx="40" ry="60" fill="rgba(74,140,42,0.35)"/>
+        <!-- pulpa -->
+        <ellipse cx="150" cy="235" rx="68" ry="88" fill="#F2C94C"/>
+        <!-- semilla -->
+        <ellipse cx="150" cy="248" rx="38" ry="48" fill="#8B4513"/>
+        <ellipse cx="140" cy="236" rx="12" ry="16" fill="rgba(255,255,255,0.15)"/>
+        <!-- tallo -->
+        <rect x="142" y="55" width="16" height="42" rx="8" fill="#4A8C2A"/>
+        <ellipse cx="150" cy="55" rx="14" ry="10" fill="#4A8C2A"/>
+        <!-- hoja -->
+        <path d="M158 62 Q195 30 185 70 Q172 85 158 75 Z" fill="#4A8C2A"/>
+        <path d="M158 68 Q180 48 178 70" stroke="#2D5A1B" stroke-width="1.5" fill="none"/>
+      </svg>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-num">500+</span>
+        <span class="stat-label">Clientes felices</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">3</span>
+        <span class="stat-label">Variedades frescas</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">1hr</span>
+        <span class="stat-label">Entrega express</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span class="marquee-item">PALTAS HASS <span class="dot">✦</span></span>
+      <span class="marquee-item">ENTREGA A DOMICILIO <span class="dot">✦</span></span>
+      <span class="marquee-item">100% FRESCA <span class="dot">✦</span></span>
+      <span class="marquee-item">SELECCIONADAS A MANO <span class="dot">✦</span></span>
+      <span class="marquee-item">LISTAS HOY <span class="dot">✦</span></span>
+      <span class="marquee-item">PRECIO JUSTO <span class="dot">✦</span></span>
+      <span class="marquee-item">PALTAS HASS <span class="dot">✦</span></span>
+      <span class="marquee-item">ENTREGA A DOMICILIO <span class="dot">✦</span></span>
+      <span class="marquee-item">100% FRESCA <span class="dot">✦</span></span>
+      <span class="marquee-item">SELECCIONADAS A MANO <span class="dot">✦</span></span>
+      <span class="marquee-item">LISTAS HOY <span class="dot">✦</span></span>
+      <span class="marquee-item">PRECIO JUSTO <span class="dot">✦</span></span>
+    </div>
+  </div>
+
+  <!-- PRODUCTOS -->
+  <section class="productos" id="productos">
+    <div class="section-header">
+      <div>
+        <div class="section-kicker">Lo que tenemos hoy</div>
+        <div class="section-title">NUESTRAS PALTAS</div>
+      </div>
+      <a href="https://wa.me/56900000000" class="btn-primary" style="background:var(--verde); color:var(--crema);">Ver todo el stock →</a>
+    </div>
+    <div class="productos-grid">
+      <div class="producto-card">
+        <div class="producto-img">
+          <span style="position:relative;z-index:2;font-size:4.5rem">🥑</span>
+          <span class="producto-badge">Para hoy</span>
+        </div>
+        <div class="producto-body">
+          <div class="producto-nombre">Hass Premium</div>
+          <div class="producto-desc">Madura en su punto justo. Perfecta para guacamole, tostadas o comer sola.</div>
+          <div class="producto-footer">
+            <span class="producto-precio">$1.200 / u</span>
+            <button class="btn-agregar" onclick="this.textContent='✓ Agregado'">+ Pedir</button>
+          </div>
+        </div>
+      </div>
+      <div class="producto-card">
+        <div class="producto-img amarillo-bg">
+          <span style="position:relative;z-index:2;font-size:4.5rem">🥑</span>
+          <span class="producto-badge" style="background:var(--verde);color:var(--crema);">Para mañana</span>
+        </div>
+        <div class="producto-body">
+          <div class="producto-nombre">Hass Semimadura</div>
+          <div class="producto-desc">Lista mañana o pasado. Ideal si quieres planificar tus comidas de la semana.</div>
+          <div class="producto-footer">
+            <span class="producto-precio">$1.000 / u</span>
+            <button class="btn-agregar" onclick="this.textContent='✓ Agregado'">+ Pedir</button>
+          </div>
+        </div>
+      </div>
+      <div class="producto-card">
+        <div class="producto-img naranja-bg">
+          <span style="position:relative;z-index:2;font-size:4.5rem">📦</span>
+          <span class="producto-badge" style="background:var(--naranja);color:white;">Ahorro</span>
+        </div>
+        <div class="producto-body">
+          <div class="producto-nombre">Caja x10</div>
+          <div class="producto-desc">Mix de maduras y semimaduras. Para la familia o la semana completa. ¡El mejor precio!</div>
+          <div class="producto-footer">
+            <span class="producto-precio">$9.500 / caja</span>
+            <button class="btn-agregar" onclick="this.textContent='✓ Agregado'">+ Pedir</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CÓMO FUNCIONA -->
+  <section class="como" id="como">
+    <div class="section-kicker">Simple y rápido</div>
+    <div class="section-title">CÓMO FUNCIONA</div>
+    <div class="pasos">
+      <div class="paso">
+        <div class="paso-num">01</div>
+        <div class="paso-titulo">Elige tus paltas</div>
+        <div class="paso-desc">Selecciona la variedad y madurez que necesitas. Para hoy o para la semana.</div>
+      </div>
+      <div class="paso">
+        <div class="paso-num">02</div>
+        <div class="paso-titulo">Escríbenos por WhatsApp</div>
+        <div class="paso-desc">Confirma tu pedido y dirección en segundos. Sin formularios complicados.</div>
+      </div>
+      <div class="paso">
+        <div class="paso-num">03</div>
+        <div class="paso-titulo">Recibe en 1 hora</div>
+        <div class="paso-desc">Entrega express a domicilio. Frescas, limpias y listas para consumir.</div>
+      </div>
+      <div class="paso">
+        <div class="paso-num">04</div>
+        <div class="paso-titulo">¡A disfrutar!</div>
+        <div class="paso-desc">Disfruta la mejor palta de tu barrio. Si no te gusta, te devolvemos el dinero.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIOS -->
+  <section class="testimonios" id="testimonios">
+    <div class="section-kicker">Lo que dicen nuestros clientes</div>
+    <div class="section-title">REVIEWS</div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-quote">"</div>
+        <div class="testi-text">Nunca pensé que comprar paltas podía ser tan fácil. Llegaron en 40 minutos y estaban perfectas para el almuerzo.</div>
+        <div class="testi-author">— María G., cliente frecuente</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-quote">"</div>
+        <div class="testi-text">La caja x10 es un golazo. Tengo paltas toda la semana sin preocuparme. Y el precio no tiene competencia.</div>
+        <div class="testi-author">— Rodrigo M.</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-quote">"</div>
+        <div class="testi-text">Que te digan "esta es para hoy, esta para mañana" es un detalle que marca la diferencia. Se nota que saben lo que venden.</div>
+        <div class="testi-author">— Carmen P.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TABLA DE VOLÚMENES -->
+  <section class="volumenes" id="mayoristas">
+    <div class="section-kicker">Para restaurantes, ferias y supermercados</div>
+    <div class="section-title">PRECIOS POR VOLUMEN</div>
+    <table class="vol-table">
+      <thead>
+        <tr>
+          <th>Volumen</th>
+          <th>Variedad</th>
+          <th>Precio por unidad</th>
+          <th>Entrega</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Caja x20</td>
+          <td>Hass Premium</td>
+          <td class="vol-price">A cotizar</td>
+          <td>La Calera / Hijuelas</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Caja x50</td>
+          <td>Hass Premium</td>
+          <td class="vol-price">A cotizar</td>
+          <td>V Región</td>
+          <td><span class="vol-badge">Popular</span></td>
+        </tr>
+        <tr>
+          <td>Pallet (400+ u)</td>
+          <td>Mix Hass</td>
+          <td class="vol-price">A cotizar</td>
+          <td>A coordinar</td>
+          <td><span class="vol-badge">Mejor precio</span></td>
+        </tr>
+        <tr>
+          <td>Acuerdo mensual</td>
+          <td>Según necesidad</td>
+          <td class="vol-price">Precio fijo</td>
+          <td>Programada</td>
+          <td><span class="vol-badge" style="background:var(--verde);color:var(--crema)">Restoranes</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- B2B SECCIÓN -->
+  <section class="b2b" id="b2b">
+    <div class="section-kicker">Proveedores directos desde Hijuelas, V Región</div>
+    <div class="section-title">¿ERES RESTAURANTE<br>O SUPERMERCADO?</div>
+    <div class="b2b-grid">
+      <div class="b2b-propuestas">
+        <div class="b2b-item">
+          <div class="b2b-icon">🏭</div>
+          <div>
+            <div class="b2b-item-title">Bodega propia en Hijuelas</div>
+            <div class="b2b-item-desc">Stock permanente con capacidad de gran volumen. Paltas Hass directamente desde nuestra bodega en la V Región.</div>
+          </div>
+        </div>
+        <div class="b2b-item">
+          <div class="b2b-icon">📦</div>
+          <div>
+            <div class="b2b-item-title">Consistencia garantizada</div>
+            <div class="b2b-item-desc">Abastecemos de forma regular. Puedes programar entregas semanales o mensuales según tu operación.</div>
+          </div>
+        </div>
+        <div class="b2b-item">
+          <div class="b2b-icon">🤝</div>
+          <div>
+            <div class="b2b-item-title">Trato directo con el productor</div>
+            <div class="b2b-item-desc">Sin intermediarios. Hablas directamente con Rodrigo, el dueño. Precios justos y respuesta rápida.</div>
+          </div>
+        </div>
+        <div class="b2b-item">
+          <div class="b2b-icon">🚚</div>
+          <div>
+            <div class="b2b-item-title">Distribución en la V Región</div>
+            <div class="b2b-item-desc">Atendemos La Calera, Quillota, Limache, Villa Alemana y sectores de la Región de Valparaíso. Coordinamos según volumen.</div>
+          </div>
+        </div>
+        <div class="b2b-item">
+          <div class="b2b-icon">📊</div>
+          <div>
+            <div class="b2b-item-title">Facturación y documentos</div>
+            <div class="b2b-item-desc">Emitimos boleta y factura. Apto para supermercados, cadenas de restaurantes y empresas con contabilidad formal.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FORMULARIO COTIZACIÓN -->
+      <div class="b2b-form-wrap">
+        <div class="b2b-form-title">Cotiza aquí</div>
+        <div class="b2b-form-sub">Cuéntanos tu negocio y te respondemos en menos de 24 horas con una propuesta a medida.</div>
+
+        <div class="form-group">
+          <label class="form-label">Nombre de tu negocio</label>
+          <input class="form-input" type="text" placeholder="Ej: Restaurante El Huerto">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Tu nombre</label>
+            <input class="form-input" type="text" placeholder="Nombre">
+          </div>
+          <div class="form-group">
+            <label class="form-label">WhatsApp</label>
+            <input class="form-input" type="tel" placeholder="+56 9 ...">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tipo de negocio</label>
+          <select class="form-select">
+            <option value="">Selecciona...</option>
+            <option>Restaurante / Cafetería</option>
+            <option>Supermercado / Minimarket</option>
+            <option>Feria / Puesto</option>
+            <option>Hotel / Casino</option>
+            <option>Distribuidor</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Volumen estimado semanal</label>
+          <select class="form-select">
+            <option value="">Selecciona...</option>
+            <option>20–50 paltas</option>
+            <option>50–100 paltas</option>
+            <option>100–300 paltas</option>
+            <option>300–500 paltas</option>
+            <option>Más de 500 paltas</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">¿Algo más que quieras contarnos?</label>
+          <textarea class="form-textarea" placeholder="Frecuencia de entrega, variedad preferida, zona, etc."></textarea>
+        </div>
+        <button class="btn-form" onclick="this.textContent='✓ Enviado — te contactamos pronto'">
+          Solicitar cotización 📋
+        </button>
+        <div class="b2b-clientes">O escríbenos directo: <strong>+56 9 0000 0000</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="cta-final" id="contacto">
+    <h2 class="cta-title">¿LISTO PARA<br>TU PALTA?</h2>
+    <p class="cta-sub">Pedidos por WhatsApp · Entrega en 1 hora · Lunes a sábado</p>
+    <a href="https://wa.me/56900000000?text=Hola!%20Quiero%20pedir%20paltas%20🥑" class="cta-btn">
+      Pedir por WhatsApp 💬
+    </a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">
+      <a href="#" class="nav-logo">PALTAS<span style="color:var(--naranja)">YA!</span></a>
+      <p>Frescura que no espera</p>
+    </div>
+    <div class="footer-col">
+      <h4>Productos</h4>
+      <ul>
+        <li><a href="#">Hass Premium</a></li>
+        <li><a href="#">Hass Semimadura</a></li>
+        <li><a href="#">Caja x10</a></li>
+        <li><a href="#mayoristas">Pedidos mayoristas</a></li>
+        <li><a href="#b2b">Cotizar volumen</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contacto</h4>
+      <ul>
+        <li><a href="https://wa.me/56900000000">WhatsApp</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">hola@paltasya.cl</a></li>
+        <li><a href="#">Lun–Sáb 9:00–19:00</a></li>
+      </ul>
+    </div>
+  </footer>
+  <div class="footer-bottom">
+    <span>© 2026 Paltas Ya! · Todos los derechos reservados</span>
+    <span>Hecho con 🥑 y mucho amor</span>
+  </div>
+
+  <!-- WHATSAPP FLOAT -->
+  <a href="https://wa.me/56900000000" class="wa-float" title="Pedir por WhatsApp">💬</a>
+
+  <script>
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top  = e.clientY + 'px';
+    });
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('big'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
+    });
+  </script>
+
+</body>
+</html>
