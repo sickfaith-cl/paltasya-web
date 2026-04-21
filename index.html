@@ -178,7 +178,6 @@
     }
     .btn-secondary:hover { border-color: var(--crema); background: rgba(245,240,232,0.08); }
 
-    /* palta hero */
     .hero-visual {
       display: flex;
       justify-content: center;
@@ -206,9 +205,7 @@
       animation: fadeUp 0.6s 0.4s ease both;
     }
 
-    .stat {
-      display: flex; flex-direction: column;
-    }
+    .stat { display: flex; flex-direction: column; }
     .stat-num {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 2.5rem;
@@ -259,10 +256,7 @@
     }
 
     /* ── PRODUCTOS ── */
-    .productos {
-      padding: 6rem 3rem;
-      background: var(--crema);
-    }
+    .productos { padding: 6rem 3rem; background: var(--crema); }
 
     .section-header {
       display: flex;
@@ -385,12 +379,7 @@
     .btn-agregar:hover { background: var(--verde2); transform: scale(1.05); }
 
     /* ── CÓMO FUNCIONA ── */
-    .como {
-      background: var(--negro);
-      padding: 6rem 3rem;
-      color: var(--crema);
-    }
-
+    .como { background: var(--negro); padding: 6rem 3rem; color: var(--crema); }
     .como .section-kicker { color: var(--amarillo); }
     .como .section-title  { color: var(--crema); }
 
@@ -399,7 +388,6 @@
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 2rem;
       margin-top: 3rem;
-      position: relative;
     }
 
     .paso {
@@ -433,10 +421,7 @@
     }
 
     /* ── TESTIMONIOS ── */
-    .testimonios {
-      padding: 6rem 3rem;
-      background: var(--crema);
-    }
+    .testimonios { padding: 6rem 3rem; background: var(--crema); }
 
     .testi-grid {
       display: grid;
@@ -450,7 +435,6 @@
       border-radius: 20px;
       padding: 2rem;
       border: 1px solid rgba(0,0,0,0.05);
-      position: relative;
     }
 
     .testi-quote {
@@ -631,11 +615,7 @@
       align-items: start;
     }
 
-    .b2b-propuestas {
-      display: flex;
-      flex-direction: column;
-      gap: 1.2rem;
-    }
+    .b2b-propuestas { display: flex; flex-direction: column; gap: 1.2rem; }
 
     .b2b-item {
       display: flex;
@@ -655,11 +635,8 @@
     .b2b-icon {
       font-size: 2rem;
       flex-shrink: 0;
-      width: 48px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      width: 48px; height: 48px;
+      display: flex; align-items: center; justify-content: center;
     }
 
     .b2b-item-title {
@@ -700,9 +677,7 @@
       line-height: 1.5;
     }
 
-    .form-group {
-      margin-bottom: 1rem;
-    }
+    .form-group { margin-bottom: 1rem; }
 
     .form-label {
       display: block;
@@ -749,7 +724,7 @@
       font-family: 'DM Sans', sans-serif;
       font-weight: 700;
       font-size: 0.95rem;
-      cursor: none;
+      cursor: pointer;
       transition: background 0.2s, transform 0.15s;
       margin-top: 0.5rem;
       display: flex;
@@ -758,6 +733,7 @@
       gap: 0.5rem;
     }
     .btn-form:hover { background: var(--verde2); transform: translateY(-1px); }
+    .btn-form:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
 
     .b2b-clientes {
       margin-top: 1rem;
@@ -766,11 +742,20 @@
       text-align: center;
     }
 
-    /* Volúmenes tabla */
-    .volumenes {
-      background: var(--crema);
-      padding: 5rem 3rem;
+    .form-success {
+      display: none;
+      margin-top: 1rem;
+      padding: 1.5rem;
+      background: #e8f5e9;
+      border-radius: 16px;
+      text-align: center;
     }
+    .form-success .success-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+    .form-success .success-title { font-weight: 700; color: var(--verde); font-size: 1rem; margin-bottom: 0.3rem; }
+    .form-success .success-desc { font-size: 0.82rem; color: #555; }
+
+    /* Volúmenes tabla */
+    .volumenes { background: var(--crema); padding: 5rem 3rem; }
 
     .vol-table {
       width: 100%;
@@ -876,19 +861,13 @@
     </div>
     <div class="hero-visual">
       <svg class="palta-big" viewBox="0 0 300 380" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- cuerpo -->
         <ellipse cx="150" cy="220" rx="110" ry="150" fill="#2D5A1B"/>
-        <!-- highlight -->
         <ellipse cx="110" cy="160" rx="40" ry="60" fill="rgba(74,140,42,0.35)"/>
-        <!-- pulpa -->
         <ellipse cx="150" cy="235" rx="68" ry="88" fill="#F2C94C"/>
-        <!-- semilla -->
         <ellipse cx="150" cy="248" rx="38" ry="48" fill="#8B4513"/>
         <ellipse cx="140" cy="236" rx="12" ry="16" fill="rgba(255,255,255,0.15)"/>
-        <!-- tallo -->
         <rect x="142" y="55" width="16" height="42" rx="8" fill="#4A8C2A"/>
         <ellipse cx="150" cy="55" rx="14" ry="10" fill="#4A8C2A"/>
-        <!-- hoja -->
         <path d="M158 62 Q195 30 185 70 Q172 85 158 75 Z" fill="#4A8C2A"/>
         <path d="M158 68 Q180 48 178 70" stroke="#2D5A1B" stroke-width="1.5" fill="none"/>
       </svg>
@@ -1126,55 +1105,69 @@
         </div>
       </div>
 
-      <!-- FORMULARIO COTIZACIÓN -->
+      <!-- FORMULARIO COTIZACIÓN — Formspree -->
       <div class="b2b-form-wrap">
         <div class="b2b-form-title">Cotiza aquí</div>
         <div class="b2b-form-sub">Cuéntanos tu negocio y te respondemos en menos de 24 horas con una propuesta a medida.</div>
 
-        <div class="form-group">
-          <label class="form-label">Nombre de tu negocio</label>
-          <input class="form-input" type="text" placeholder="Ej: Restaurante El Huerto">
-        </div>
-        <div class="form-row">
+        <form id="cotizacion-form" action="https://formspree.io/f/REEMPLAZA_ESTE_ID" method="POST">
+          <input type="hidden" name="_subject" value="Nueva cotización mayorista — Paltas Ya!">
+          <input type="hidden" name="_language" value="es">
+          <input type="hidden" name="_next" value="https://www.paltasya.cl/#b2b">
+
           <div class="form-group">
-            <label class="form-label">Tu nombre</label>
-            <input class="form-input" type="text" placeholder="Nombre">
+            <label class="form-label">Nombre de tu negocio</label>
+            <input class="form-input" type="text" name="negocio" placeholder="Ej: Restaurante El Huerto" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Tu nombre</label>
+              <input class="form-input" type="text" name="nombre" placeholder="Nombre" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">WhatsApp</label>
+              <input class="form-input" type="tel" name="whatsapp" placeholder="+56 9 ..." required>
+            </div>
           </div>
           <div class="form-group">
-            <label class="form-label">WhatsApp</label>
-            <input class="form-input" type="tel" placeholder="+56 9 ...">
+            <label class="form-label">Tipo de negocio</label>
+            <select class="form-select" name="tipo_negocio" required>
+              <option value="">Selecciona...</option>
+              <option>Restaurante / Cafetería</option>
+              <option>Supermercado / Minimarket</option>
+              <option>Feria / Puesto</option>
+              <option>Hotel / Casino</option>
+              <option>Distribuidor</option>
+              <option>Otro</option>
+            </select>
           </div>
+          <div class="form-group">
+            <label class="form-label">Volumen estimado semanal</label>
+            <select class="form-select" name="volumen" required>
+              <option value="">Selecciona...</option>
+              <option>1–5 cajas 10 kilos</option>
+              <option>5-10 cajas 10 kilos</option>
+              <option>10–30 cajas 10 kilos</option>
+              <option>30 o mas cajas 10 kilos</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">¿Algo más que quieras contarnos?</label>
+            <textarea class="form-textarea" name="mensaje" placeholder="Frecuencia de entrega, variedad preferida, zona, etc."></textarea>
+          </div>
+
+          <button type="submit" class="btn-form" id="btn-cotizar">
+            Solicitar cotización 📋
+          </button>
+        </form>
+
+        <div class="form-success" id="form-success">
+          <div class="success-icon">✅</div>
+          <div class="success-title">¡Cotización enviada!</div>
+          <div class="success-desc">Te respondemos en menos de 24 horas a tu WhatsApp.</div>
         </div>
-        <div class="form-group">
-          <label class="form-label">Tipo de negocio</label>
-          <select class="form-select">
-            <option value="">Selecciona...</option>
-            <option>Restaurante / Cafetería</option>
-            <option>Supermercado / Minimarket</option>
-            <option>Feria / Puesto</option>
-            <option>Hotel / Casino</option>
-            <option>Distribuidor</option>
-            <option>Otro</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Volumen estimado semanal</label>
-          <select class="form-select">
-            <option value="">Selecciona...</option>
-            <option>1–5 cajas 10 kilos</option>
-            <option>5-10 cajas 10 kilos</option>
-            <option>10–30 cajas 10 kilos</option>
-            <option>30 o mas cajas 10 kilos</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">¿Algo más que quieras contarnos?</label>
-          <textarea class="form-textarea" placeholder="Frecuencia de entrega, variedad preferida, zona, etc."></textarea>
-        </div>
-        <button class="btn-form" onclick="this.textContent='✓ Enviado — te contactamos pronto'">
-          Solicitar cotización 📋
-        </button>
-        <div class="b2b-clientes">O escríbenos directo: <strong>+56 9 3193 6646</strong></div>
+
+        <div class="b2b-clientes">O escríbenos directo: <a href="https://wa.me/56931936646" style="color:var(--verde);font-weight:700;">+56 9 3193 6646</a></div>
       </div>
     </div>
   </section>
@@ -1223,6 +1216,7 @@
   <a href="https://wa.me/56931936646" class="wa-float" title="Pedir por WhatsApp">💬</a>
 
   <script>
+    // Cursor
     const cursor = document.getElementById('cursor');
     document.addEventListener('mousemove', e => {
       cursor.style.left = e.clientX + 'px';
@@ -1232,6 +1226,35 @@
       el.addEventListener('mouseenter', () => cursor.classList.add('big'));
       el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
     });
+
+    // Formspree submit handler
+    const form = document.getElementById('cotizacion-form');
+    if (form) {
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const btn = document.getElementById('btn-cotizar');
+        btn.textContent = 'Enviando...';
+        btn.disabled = true;
+
+        try {
+          const res = await fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { 'Accept': 'application/json' }
+          });
+          if (res.ok) {
+            form.style.display = 'none';
+            document.getElementById('form-success').style.display = 'block';
+          } else {
+            btn.textContent = 'Error — intenta de nuevo';
+            btn.disabled = false;
+          }
+        } catch(err) {
+          btn.textContent = 'Error — intenta de nuevo';
+          btn.disabled = false;
+        }
+      });
+    }
   </script>
 
 </body>
